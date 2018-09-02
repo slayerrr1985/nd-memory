@@ -29,8 +29,10 @@ body {
 }
 
 h1 {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
+    font-family: 'Coda', sans-serif;
+    font-weight: 800;
+    font-size: 3em;
+    margin-bottom: 0.25em;
 }
 
 /*
@@ -87,15 +89,23 @@ h1 {
 
 .score-panel {
     text-align: left;
-    width: 345px;
-    margin-bottom: 10px;
+    width: 660px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
+.score-panel .panel:first-child,
+.score-panel .panel:last-child{
+    width: 150px;
+}
 .score-panel .stars {
     margin: 0;
     padding: 0;
     display: inline-block;
-    margin: 0 5px 0 0;
+    margin: 0;
+    font-size: 25px;
 }
 
 .score-panel .stars li {
@@ -103,7 +113,104 @@ h1 {
     display: inline-block;
 }
 
+.score-panel .stars .light{
+    color:#ffa700;
+}
+
+.score-panel p{
+    margin: 0;
+}
+
 .score-panel .restart {
-    float: right;
     cursor: pointer;
+    text-align: right;
+}
+
+.score-panel .restart:hover {
+    color: #de0101;
+}
+
+
+.score-panel .timer-container {
+    text-align: right;
+}
+
+.score-panel .timer {
+    display: inline-block;
+    margin-left: 1em;
+    margin-right: 0.2em;
+    width: 1em;
+    text-align: right;
+}
+
+
+
+/*
+ * Styles for the Modal
+ */
+
+ .modal {
+    position: absolute;
+    text-align: center;
+    width: 400px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+    border-radius: 10px;
+    padding: 2em;
+    z-index: 999;
+    display: none;
+}
+
+.showModal{
+    display: block;
+}
+
+.modal .message {
+    font-family: 'Coda', sans-serif;
+    font-weight: 800;
+    font-size: 3em;
+    margin: 0;
+}
+
+.modal .final-stars {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    margin: 0 5px 0 0;
+    font-size: 40px;
+}
+
+.modal .final-stars li {
+    list-style: none;
+    display: inline-block;
+}
+
+.modal .final-stars .light{
+    color:#ffa700;
+}
+
+.modal .restart {
+    width: 150px;
+    display: block;
+    margin: 0.5em auto;
+    padding: 0.5em;
+    border-radius: 10px;
+    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%)
+}
+
+.modal .restart:hover {
+    cursor: pointer;
+    transition: all 0.2s;
+    background: linear-gradient(320deg, #02ccba 0%, #aa7ecd 100%)
+}
+
+.modal .restart p{
+    margin: 0;
+}
+
+.modal .timer {
+    display: inline-block;
+    margin-left: 1em;
+    width: 1em;
 }
