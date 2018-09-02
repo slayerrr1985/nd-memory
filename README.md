@@ -3,7 +3,7 @@
 ## Table of Contents
 
 * [Objective of the game](#instructions)
-* [Known bugs](#knownbugs)
+* [Known bugs](#known-bugs)
 * [Dependencies](#dependencies)
 
 ## Objective of the Game
@@ -30,4 +30,4 @@ If you click on two cards and don't wait until they're hidden to click on anothe
 ## Dependencies
 
 * CSS animations provided by
-* Icons provided by [Font Awesome](#fontawesome.com)
+* Icons provided by [Font Awesome](http://www.fontawesome.com)
