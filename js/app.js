@@ -4,13 +4,14 @@
  *************************************************/
 
 let moveCount = 0;
-let starCount = 0;
+let starCount = 5;
 let timeCount = 0;
 let matchCount = 0;
 let timerId = 0;
 let cardTypes = ["fa-diamond","fa-bicycle","fa-bolt","fa-paper-plane-o","fa-cube","fa-bomb","fa-anchor","fa-leaf"];
 let deck = newDeck(cardTypes);
-document.querySelector(".restart").addEventListener('click', startGame);
+
+
 
 startGame();
 
@@ -36,12 +37,11 @@ function newDeck(cardTypes){
  */
 
 function displayDeck(deck){
-    let deckContainer = document.querySelector(".deck");
     let deckHTML = "";
     for(let i=0; i<deck.length; i++){
         deckHTML += deck[i];
     }
-    deckContainer.innerHTML = deckHTML;
+    document.querySelector(".deck").innerHTML = deckHTML;
     /* Set the event listener for each card */
     let cards = document.querySelectorAll(".card");
     for (const card of cards){
@@ -89,15 +89,13 @@ function stopTimeCounter(timerId) {
  */
 
 function updateMoves(){
-    let moveContainer = document.querySelector(".moves");
     moveCount ++;
-    moveContainer.innerHTML = moveCount;
+    document.querySelector(".moves").innerHTML = moveCount;
 }
 
 function resetMoves(){
-    let moveContainer = document.querySelector(".moves");
     moveCount = 0;
-    moveContainer.innerHTML = moveCount;
+    document.querySelector(".moves").innerHTML = moveCount;
 }
 
 /*
@@ -105,30 +103,53 @@ function resetMoves(){
  */
 
 function updateMatches(){
-    let matchContainer = document.querySelector(".matches");
     matchCount ++;
-    matchContainer.innerHTML = matchCount;
+    document.querySelector(".matches").innerHTML = matchCount;
 }
 
 function resetMatches(){
-    let matchContainer = document.querySelector(".matches");
     matchCount = 0;
-    matchContainer.innerHTML = matchCount;
+    document.querySelector(".matches").innerHTML = matchCount;
 }
 
 /*
  *  Star Rating
- * 
-    The game displays a star rating (from 1 to at least 3) that reflects the player's performance. At the beginning of a game, it should display at least 3 stars. After some number of moves, it should change to a lower star rating. After a few more moves, it should change to a even lower star rating (down to 1). The number of moves needed to change the rating is up to you, but it should happen at some point.
+ *  
+ *  5 stars - 15 moves
+ *  4 stars - more than 15 moves
+ *  3 stars - more than 20 moves
+ *  2 stars - more than 25 moves
+ *  1 star  - more than 30 moves
  * 
  */
 
 function updateStars(){
-
+    let starsContainer = document.querySelector(".stars");
+    let stars = starsContainer.querySelectorAll("li");
+    if (moveCount === 15){
+        stars[4].classList.remove("light");
+        starCount--;
+    }
+    if (moveCount === 20){
+        stars[3].classList.remove("light");
+        starCount--;
+    }
+    if (moveCount === 25){
+        stars[2].classList.remove("light");
+        starCount--;
+    }
+    if (moveCount === 30){
+        stars[1].classList.remove("light");
+        starCount--;
+    }
 }
 
-function resetStars(){
-
+function resetStars(starsContainerTarget){
+    let starsContainer = document.querySelector("." + starsContainerTarget);
+    let stars = starsContainer.querySelectorAll("li");
+    for (i=0; i<stars.length; i++){
+        stars[i].classList.add("light");
+    }
 }
 
 
@@ -143,7 +164,22 @@ function checkEndGame(){
     if (matchCount == 8){ 
         console.log("YOU WON!!!");
         stopTimeCounter(timerId);
+        showResults();
     }
+}
+
+function showResults() {
+    let modal = document.querySelector(".modal");
+    modal.classList.add("showModal");
+    let starsContainer = document.querySelector(".final-stars");
+    let stars = starsContainer.querySelectorAll("li");
+    console.log(starCount);
+
+    for (i=0; i<starCount; i++){
+        stars[i].classList.add("light");
+    }
+    document.querySelector(".final-moves").innerHTML = moveCount;
+    document.querySelector(".final-timer").innerHTML = timeCount;
 }
 
 /*
@@ -152,27 +188,30 @@ function checkEndGame(){
 
 function startGame(){
     console.log("A NEW GAME HAS STARTED! Dum dum duuuum...");
+    /* Reset all counters */
     resetMoves();
     resetMatches();
-    if (timerId==null){
+    resetStars("stars");
+    /* Stop the existing counters and start a new one */
+    if (!timerId){
         timerId = startTimeCounter();
     }
     else{
         stopTimeCounter(timerId);
         timerId = startTimeCounter();
     }
-    /*shuffle(deck);*/
+    /* Hide modal */
+    document.querySelector(".modal").classList.remove("showModal");
+    /* Activate restart buttons */
+    for (const restartbutton of document.querySelectorAll(".restart")){
+        restartbutton.addEventListener('click', startGame);
+    }
+    /* shuffle(deck);*/
     displayDeck(deck);
 }
 
 /*
- * Function to run if a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
+ * Function to run when we click on a card
  */
 
 function cardClick(e){
@@ -188,6 +227,7 @@ function cardClick(e){
         /* When we have 2 cards showing */
         if (openCards.length === 2){
             updateMoves();
+            updateStars();
             /* If there's a match */
             if (openCards[0].isEqualNode(openCards[1])){
                 console.log("There's a match!");

@@ -15,25 +15,53 @@
             <h1>Matching Game</h1>
         </header>
 
-        <section class="score-panel">
-        	<ul class="stars">
+        <section class="modal">
+            <p class="message">YOU WON!!!</p>
+            <ul class="final-stars">
         		<li><i class="fa fa-star"></i></li>
         		<li><i class="fa fa-star"></i></li>
+                <li><i class="fa fa-star"></i></li>
+                <li><i class="fa fa-star"></i></li>
         		<li><i class="fa fa-star"></i></li>
-        	</ul>
-
-        	<span class="moves">0</span> Moves
-        	<span class="matches">0</span> Matches
+            </ul>
+            <p class="moves-container">You used <span class="final-moves">0</span> moves</p>
+            <p class="timer-container">You spent <span class="final-timer">0</span> seconds playing</p>
 
             <div class="restart">
-        		Restart <i class="fa fa-repeat"></i>
+                <p>RESTART GAME</p> 
+                <p><i class="fa fa-repeat"></i></p>
+            </div>
+
+        </section>
+        
+        <section class="score-panel">
+            <div class="panel">
+                <p><span class="matches">0</span>/8 Matches</p>
+                <p><span class="moves">0</span> Moves</p>
+            </div>
+            <div class="panel">
+                <ul class="stars">
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                </ul>
+            </div>
+
+            <div class="panel">
+                <div class="timer-container">
+                    <span class="timer">0</span> seconds
+                </div>
+                <div class="restart">
+                    <i class="fa fa-repeat"></i> Restart 
+                </div>
             </div>
 
         </section>
 
         <ul class="deck"></ul>
 
-        <span class="timer">0</span> seconds
 
     </div>
 
