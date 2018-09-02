@@ -24,8 +24,7 @@ Game displays the current number of moves a user has made.
 
 ## Known bugs
 
-If you click on two cards and don't wait until they're hidden to click on another one it gets stuck.
-
+* If you click on two cards and don't wait until they're hidden to click on another one it gets stuck.
 
 ## Dependencies
 
