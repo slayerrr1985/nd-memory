@@ -11,10 +11,7 @@ let timerId = 0;
 let cardTypes = ["fa-diamond","fa-bicycle","fa-bolt","fa-paper-plane-o","fa-cube","fa-bomb","fa-anchor","fa-leaf"];
 let deck = newDeck(cardTypes);
 
-
-
 startGame();
-
 
 
 /*
@@ -126,7 +123,7 @@ function resetMatches(){
 function updateStars(){
     let starsContainer = document.querySelector(".stars");
     let stars = starsContainer.querySelectorAll("li");
-    if (moveCount === 15){
+    if (moveCount === 10){
         stars[4].classList.remove("light");
         starCount--;
     }
@@ -152,12 +149,8 @@ function resetStars(starsContainerTarget){
     }
 }
 
-
 /*
  * Manage what happens when we win the game
- * 
- * When a user wins the game, a modal appears to congratulate the player and ask if they want to play again. It should also tell the user how much time it took to win the game, and what the star rating was.
- * 
  */
 
 function checkEndGame(){
@@ -173,8 +166,6 @@ function showResults() {
     modal.classList.add("showModal");
     let starsContainer = document.querySelector(".final-stars");
     let stars = starsContainer.querySelectorAll("li");
-    console.log(starCount);
-
     for (i=0; i<starCount; i++){
         stars[i].classList.add("light");
     }

@@ -130,20 +130,9 @@ h1 {
     color: #de0101;
 }
 
-
 .score-panel .timer-container {
     text-align: right;
 }
-
-.score-panel .timer {
-    display: inline-block;
-    margin-left: 1em;
-    margin-right: 0.2em;
-    width: 1em;
-    text-align: right;
-}
-
-
 
 /*
  * Styles for the Modal
