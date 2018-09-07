@@ -197,7 +197,7 @@ function startGame(){
     for (const restartbutton of document.querySelectorAll(".restart")){
         restartbutton.addEventListener('click', startGame);
     }
-    /* shuffle(deck);*/
+    shuffle(deck);
     displayDeck(deck);
 }
 
