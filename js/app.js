@@ -9,6 +9,7 @@ let timeCount = 0;
 let matchCount = 0;
 let timerId = 0;
 let cardTypes = ["fa-diamond","fa-bicycle","fa-bolt","fa-paper-plane-o","fa-cube","fa-bomb","fa-anchor","fa-leaf"];
+let openCards = [];
 let deck = newDeck(cardTypes);
 
 startGame();
@@ -39,11 +40,12 @@ function displayDeck(deck){
         deckHTML += deck[i];
     }
     document.querySelector(".deck").innerHTML = deckHTML;
-    /* Set the event listener for each card */
+    /* Set the event listener and id for each card */
     let cards = document.querySelectorAll(".card");
-    for (const card of cards){
-        card.addEventListener('click', cardClick);
-    }
+    for(let i=0; i<cards.length; i++){
+        cards[i].setAttribute("id",i);
+        cards[i].addEventListener('click', cardClick);
+    }            
 }
 
 /*
@@ -112,8 +114,8 @@ function resetMatches(){
 /*
  *  Star Rating
  *  
- *  5 stars - 15 moves
- *  4 stars - more than 15 moves
+ *  5 stars - 10 moves or less
+ *  4 stars - more than 10 moves
  *  3 stars - more than 20 moves
  *  2 stars - more than 25 moves
  *  1 star  - more than 30 moves
@@ -197,7 +199,7 @@ function startGame(){
     for (const restartbutton of document.querySelectorAll(".restart")){
         restartbutton.addEventListener('click', startGame);
     }
-    /* shuffle(deck);*/
+    shuffle(deck);
     displayDeck(deck);
 }
 
@@ -207,10 +209,15 @@ function startGame(){
 
 function cardClick(e){
     /* Check if the card is not already a match */
-    if (!e.target.classList.contains("match"))
+    if (!e.target.classList.contains("match")&&(e.target.id != ""))
     {
         /* Show card */
-        e.target.classList.add("show","open");
+        console.log("target: " + e.target.id);
+        console.log(openCards.length + " card(s) open ANTES.");
+
+        if (openCards.length < 2){
+            e.target.classList.add("show","open");
+        }
         /* Look for open cards */
         openCards = document.querySelectorAll(".open");
         console.log(openCards.length + " card(s) open.");
@@ -220,7 +227,9 @@ function cardClick(e){
             updateMoves();
             updateStars();
             /* If there's a match */
-            if (openCards[0].isEqualNode(openCards[1])){
+            if (openCards[0].innerHTML === openCards[1].innerHTML){
+                console.log(openCards[0].id);
+                console.log(openCards[1].id);
                 console.log("There's a match!");
                 openCards[0].classList.replace("open","match");
                 openCards[1].classList.replace("open","match");
