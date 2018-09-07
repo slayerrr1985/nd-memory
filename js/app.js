@@ -10,6 +10,7 @@ let matchCount = 0;
 let timerId = 0;
 let cardTypes = ["fa-diamond","fa-bicycle","fa-bolt","fa-paper-plane-o","fa-cube","fa-bomb","fa-anchor","fa-leaf"];
 let openCards = [];
+let wait = 0;
 let deck = newDeck(cardTypes);
 
 startGame();
@@ -69,7 +70,6 @@ function shuffle(array) {
  */
 
 function startTimeCounter() {
-    console.log("START THE CLOCKS!!!");
     timeCount = 0;
     let timerId = setInterval(function() {
         timeCount++;
@@ -79,7 +79,6 @@ function startTimeCounter() {
 }
 
 function stopTimeCounter(timerId) {
-    console.log("STOP THE CLOCKS!!!");
     clearInterval(timerId);
 }
 
@@ -206,35 +205,33 @@ function startGame(){
 /*
  * Function to run when we click on a card
  */
-
 function cardClick(e){
-    /* Check if the card is not already a match */
-    if (!e.target.classList.contains("match")&&(e.target.id != ""))
+    /* Check if - the card is not already a match
+                - we're not clicking on the symbol 
+                - we have finished the previous matching operations
+    */
+    if (!e.target.classList.contains("match")&&(e.target.id != "")&&(!wait))
     {
         /* Show card */
-        console.log("target: " + e.target.id);
-        console.log(openCards.length + " card(s) open ANTES.");
-
-        if (openCards.length < 2){
-            e.target.classList.add("show","open");
-        }
+        e.target.classList.add("show","open");
         /* Look for open cards */
         openCards = document.querySelectorAll(".open");
         console.log(openCards.length + " card(s) open.");
 
         /* When we have 2 cards showing */
         if (openCards.length === 2){
+            /* Wait until we finished evaluating the cards */
+            wait = 1;
             updateMoves();
             updateStars();
             /* If there's a match */
             if (openCards[0].innerHTML === openCards[1].innerHTML){
-                console.log(openCards[0].id);
-                console.log(openCards[1].id);
                 console.log("There's a match!");
                 openCards[0].classList.replace("open","match");
                 openCards[1].classList.replace("open","match");
                 updateMatches();
                 checkEndGame();
+                wait = 0;
             }
             else{
                 /* If there's no match */
@@ -242,6 +239,7 @@ function cardClick(e){
                 setTimeout(function(){
                     openCards[0].classList.remove("show","open");
                     openCards[1].classList.remove("show","open");
+                    wait = 0;
                 },1000);
             }
         }
